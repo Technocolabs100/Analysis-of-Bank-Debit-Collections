@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Bankruptcy Predictor</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Enter your Data</h2>
+        <form action="/predict" method="POST">
+
+            <div class="form-group">
+                <label for="profit on operating activities / financial expenses">Profit on Operating Activities / Financial Expenses:</label>
+                <input type="text" id="profit on operating activities / financial expenses" name="profit on operating activities / financial expenses" required><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="net profit / sales">Net Profit / Sales:</label>
+                <input type="text" id="net profit / sales" name="net profit / sales" required><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="profit on sales / total assets">Profit on Sales / Total Assets:</label>
+                <input type="text" id="profit on sales / total assets" name="profit on sales / total assets" required><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="total assets / total liabilities">Total Assets / Total Liabilities:</label>
+                <input type="text" id="total assets / total liabilities" name="total assets / total liabilities" required><br><br>
+            </div>
+
+            <div class="form-group">
+                <label for="retained earnings / total assets">Retained Earnings / Total Assets:</label>
+                <input type="text" id="retained earnings / total assets" name="retained earnings / total assets" required><br><br>
+            </div>
+
+            <!-- Add more input fields as needed -->
+
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
