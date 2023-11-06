@@ -1,0 +1,322 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyN1N/9ZkhWIZWcHAsa47MFO",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/anas1IA/Analysis-of-Bank-Debit-Collections/blob/main/perceptron%20algorithm\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 22,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "id": "RR3nBXcr1aqm",
+        "outputId": "46244558-7422-4179-cc02-1eae0206fd58"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting matplot\n",
+            "  Downloading matplot-0.1.9-py2.py3-none-any.whl (5.0 kB)\n",
+            "Collecting pyloco>=0.0.134 (from matplot)\n",
+            "  Downloading pyloco-0.0.139-py2.py3-none-any.whl (60 kB)\n",
+            "\u001b[?25l     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m0.0/60.2 kB\u001b[0m \u001b[31m?\u001b[0m eta \u001b[36m-:--:--\u001b[0m\r\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m60.2/60.2 kB\u001b[0m \u001b[31m1.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hRequirement already satisfied: matplotlib>=3.1.1 in /usr/local/lib/python3.10/dist-packages (from matplot) (3.7.1)\n",
+            "Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (1.1.0)\n",
+            "Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (0.11.0)\n",
+            "Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (4.42.1)\n",
+            "Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (1.4.5)\n",
+            "Requirement already satisfied: numpy>=1.20 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (1.23.5)\n",
+            "Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (23.1)\n",
+            "Requirement already satisfied: pillow>=6.2.0 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (9.4.0)\n",
+            "Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (3.1.1)\n",
+            "Requirement already satisfied: python-dateutil>=2.7 in /usr/local/lib/python3.10/dist-packages (from matplotlib>=3.1.1->matplot) (2.8.2)\n",
+            "Collecting ushlex (from pyloco>=0.0.134->matplot)\n",
+            "  Downloading ushlex-0.99.1.tar.gz (4.7 kB)\n",
+            "  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Requirement already satisfied: websocket-client in /usr/local/lib/python3.10/dist-packages (from pyloco>=0.0.134->matplot) (1.6.2)\n",
+            "Collecting twine (from pyloco>=0.0.134->matplot)\n",
+            "  Downloading twine-4.0.2-py3-none-any.whl (36 kB)\n",
+            "Collecting typing (from pyloco>=0.0.134->matplot)\n",
+            "  Downloading typing-3.7.4.3.tar.gz (78 kB)\n",
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m78.6/78.6 kB\u001b[0m \u001b[31m4.4 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25h  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Collecting SimpleWebSocketServer (from pyloco>=0.0.134->matplot)\n",
+            "  Downloading SimpleWebSocketServer-0.1.2.tar.gz (10 kB)\n",
+            "  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.10/dist-packages (from python-dateutil>=2.7->matplotlib>=3.1.1->matplot) (1.16.0)\n",
+            "Collecting pkginfo>=1.8.1 (from twine->pyloco>=0.0.134->matplot)\n",
+            "  Downloading pkginfo-1.9.6-py3-none-any.whl (30 kB)\n",
+            "Collecting readme-renderer>=35.0 (from twine->pyloco>=0.0.134->matplot)\n",
+            "  Downloading readme_renderer-42.0-py3-none-any.whl (13 kB)\n",
+            "Requirement already satisfied: requests>=2.20 in /usr/local/lib/python3.10/dist-packages (from twine->pyloco>=0.0.134->matplot) (2.31.0)\n",
+            "Collecting requests-toolbelt!=0.9.0,>=0.8.0 (from twine->pyloco>=0.0.134->matplot)\n",
+            "  Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)\n",
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m54.5/54.5 kB\u001b[0m \u001b[31m4.5 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hRequirement already satisfied: urllib3>=1.26.0 in /usr/local/lib/python3.10/dist-packages (from twine->pyloco>=0.0.134->matplot) (2.0.4)\n",
+            "Requirement already satisfied: importlib-metadata>=3.6 in /usr/local/lib/python3.10/dist-packages (from twine->pyloco>=0.0.134->matplot) (6.8.0)\n",
+            "Requirement already satisfied: keyring>=15.1 in /usr/lib/python3/dist-packages (from twine->pyloco>=0.0.134->matplot) (23.5.0)\n",
+            "Collecting rfc3986>=1.4.0 (from twine->pyloco>=0.0.134->matplot)\n",
+            "  Downloading rfc3986-2.0.0-py2.py3-none-any.whl (31 kB)\n",
+            "Requirement already satisfied: rich>=12.0.0 in /usr/local/lib/python3.10/dist-packages (from twine->pyloco>=0.0.134->matplot) (13.5.2)\n",
+            "Requirement already satisfied: zipp>=0.5 in /usr/local/lib/python3.10/dist-packages (from importlib-metadata>=3.6->twine->pyloco>=0.0.134->matplot) (3.16.2)\n",
+            "Collecting nh3>=0.2.14 (from readme-renderer>=35.0->twine->pyloco>=0.0.134->matplot)\n",
+            "  Downloading nh3-0.2.14-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)\n",
+            "\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m1.7/1.7 MB\u001b[0m \u001b[31m10.1 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n",
+            "\u001b[?25hRequirement already satisfied: docutils>=0.13.1 in /usr/local/lib/python3.10/dist-packages (from readme-renderer>=35.0->twine->pyloco>=0.0.134->matplot) (0.18.1)\n",
+            "Requirement already satisfied: Pygments>=2.5.1 in /usr/local/lib/python3.10/dist-packages (from readme-renderer>=35.0->twine->pyloco>=0.0.134->matplot) (2.16.1)\n",
+            "Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests>=2.20->twine->pyloco>=0.0.134->matplot) (3.2.0)\n",
+            "Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests>=2.20->twine->pyloco>=0.0.134->matplot) (3.4)\n",
+            "Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests>=2.20->twine->pyloco>=0.0.134->matplot) (2023.7.22)\n",
+            "Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.10/dist-packages (from rich>=12.0.0->twine->pyloco>=0.0.134->matplot) (3.0.0)\n",
+            "Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.10/dist-packages (from markdown-it-py>=2.2.0->rich>=12.0.0->twine->pyloco>=0.0.134->matplot) (0.1.2)\n",
+            "Building wheels for collected packages: SimpleWebSocketServer, typing, ushlex\n",
+            "  Building wheel for SimpleWebSocketServer (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for SimpleWebSocketServer: filename=SimpleWebSocketServer-0.1.2-py3-none-any.whl size=9666 sha256=d7975564fa9e0a44676e0fe28fe7dd8cfebad9ce68c5928ffc3b31a788174377\n",
+            "  Stored in directory: /root/.cache/pip/wheels/af/cb/9d/23ef01c9c26b978be6d29ed456d7348abd0e96b1563049bd63\n",
+            "  Building wheel for typing (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for typing: filename=typing-3.7.4.3-py3-none-any.whl size=26305 sha256=028a47beafc4970cfbb6308769fce7de28cf4ca8bb9c91c48e2cb7c50ae169e3\n",
+            "  Stored in directory: /root/.cache/pip/wheels/7c/d0/9e/1f26ebb66d9e1732e4098bc5a6c2d91f6c9a529838f0284890\n",
+            "  Building wheel for ushlex (setup.py) ... \u001b[?25l\u001b[?25hdone\n",
+            "  Created wheel for ushlex: filename=ushlex-0.99.1-py3-none-any.whl size=4393 sha256=c0207c21a88cfae22b3a55fa02a1b1da59a2de7cc6136f4d4f3883a044081963\n",
+            "  Stored in directory: /root/.cache/pip/wheels/fd/e4/80/4de44668798392eb2f5b24f0130df2f5d28b43cb256bf9c1f9\n",
+            "Successfully built SimpleWebSocketServer typing ushlex\n",
+            "Installing collected packages: ushlex, SimpleWebSocketServer, nh3, typing, rfc3986, readme-renderer, pkginfo, requests-toolbelt, twine, pyloco, matplot\n",
+            "Successfully installed SimpleWebSocketServer-0.1.2 matplot-0.1.9 nh3-0.2.14 pkginfo-1.9.6 pyloco-0.0.139 readme-renderer-42.0 requests-toolbelt-1.0.0 rfc3986-2.0.0 twine-4.0.2 typing-3.7.4.3 ushlex-0.99.1\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "application/vnd.colab-display-data+json": {
+              "pip_warning": {
+                "packages": [
+                  "typing"
+                ]
+              }
+            }
+          },
+          "metadata": {}
+        }
+      ],
+      "source": [
+        "!pip install matplot"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Binary Classification\n",
+        "Function activaton :le role c'est normalization\n"
+      ],
+      "metadata": {
+        "id": "m39uAtnf3j68"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import numpy as np\n",
+        "import matplot"
+      ],
+      "metadata": {
+        "id": "qv_ssDSzO5Tf"
+      },
+      "execution_count": 23,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def ind(x,y):\n",
+        "  return 1 if x==y else 0"
+      ],
+      "metadata": {
+        "id": "yQiLbC8ex3l1"
+      },
+      "execution_count": 25,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "lis=[1,2,3,4,5]\n",
+        "lis[0]\n",
+        "lis[4]"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "TkAlP50q_F30",
+        "outputId": "93c44e72-1305-4249-ca41-bd7629972c05"
+      },
+      "execution_count": 45,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "5"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 45
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def Ls(W,X,Y):\n",
+        "  n=X.shape[0]\n",
+        "  sum=0\n",
+        "  for i in range(n):\n",
+        "    sum+=ind(np.dot(W[i], X[i]),Y[i])\n",
+        "  return sum /n"
+      ],
+      "metadata": {
+        "id": "iFXLSKBcy8Pg"
+      },
+      "execution_count": 38,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def signe(x,y):\n",
+        "  return 1 if np.dot(x, y) >0 else -1"
+      ],
+      "metadata": {
+        "id": "rrmReef45u2c"
+      },
+      "execution_count": 27,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "matric=np.array([[1,2,3,],[1,3,4,],[4,5,6],[1,3,4]])\n",
+        "matric.shape[1]"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Ih7qzjyY9LWy",
+        "outputId": "6fea4b99-a59f-4c76-eca6-f6efc15ddec0"
+      },
+      "execution_count": 41,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "3"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 41
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def perceptron(W0,X,Y):\n",
+        "  W=W0\n",
+        "  t=0\n",
+        "  m=X.shape[0]\n",
+        "\n",
+        "  while(Ls(W0,X,Y)!=0):\n",
+        "    for i in range(m):\n",
+        "      if signe(np.dot(W[i], X[i]))*Y[i]< 0:\n",
+        "               W+=X[i]*Y[i]\n",
+        "               t+=1\n",
+        "               print(\"t=\",t,\" | \",Ls(X,Y,w))\n",
+        "  return W,t"
+      ],
+      "metadata": {
+        "id": "dZqA-57y8VkP"
+      },
+      "execution_count": 50,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from random import choice, randint\n",
+        "import numpy as np\n",
+        "\n",
+        "def generateData(data_size, x1, x2, x3, x4, y1, y2, y3, y4):\n",
+        "    S = []\n",
+        "    for i in range(data_size):\n",
+        "        c = [0, 1]\n",
+        "        if choice(c):\n",
+        "            xi = [1, randint(x1, x2), randint(y1, y2), 1]\n",
+        "            yi = 1\n",
+        "        else:\n",
+        "            xi = [1, randint(x3, x4), randint(y3, y4), -1]\n",
+        "            yi = -1\n",
+        "        S.append(np.array(xi))\n",
+        "    return np.asarray(S)\n"
+      ],
+      "metadata": {
+        "id": "iSMx8_JMC7_Q"
+      },
+      "execution_count": 51,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# hypothesis sign\n",
+        "def hs(x,w):\n",
+        " if np.sign(h(x,w)) > 0 : return 1\n",
+        " return -1\n",
+        "def loss(X,Y,w):\n",
+        " n = len(X) # size of data sample\n",
+        " misclassified = [1 if hs(X[i], w) != Y[i] else 0 for i in range(len(X))]\n",
+        " return sum(misclassified)/n\n",
+        "def PLA(X,Y,w):\n",
+        " n,t = len(X), 0\n",
+        " while loss(X,Y,w) != 0:\n",
+        "    for i in range(n):\n",
+        "       if hs(X[i], w) * Y[i] < 0 :\n",
+        "         w += X[i]*Y[i]\n",
+        "         t+=1"
+      ],
+      "metadata": {
+        "id": "F8fj67vhWKGC"
+      },
+      "execution_count": 29,
+      "outputs": []
+    }
+  ]
+}
